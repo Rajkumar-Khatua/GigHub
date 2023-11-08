@@ -1,20 +1,23 @@
-import React, { useState } from "react";
-import "./register.scss";
-import upload from "../../utils/cloudenaryUpload/upload.js";
-import newRequest from "../../utils/newRequest.js";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from 'react';
+import './register.scss';
+import CircularProgress from '@mui/material/CircularProgress'; // Import CircularProgress
+import upload from '../../utils/cloudenaryUpload/upload.js';
+import newRequest from '../../utils/newRequest.js';
+import { useNavigate } from 'react-router-dom';
 
 function register() {
-  const [file, setFile] = useState("");
+  const [file, setFile] = useState('');
   const [user, setUser] = useState({
-    username: "",
-    email: "",
-    password: "",
-    img: "",
-    country: "",
+    username: '',
+    email: '',
+    password: '',
+    img: '',
+    country: '',
     isSeller: false,
-    desc: "",
+    desc: '',
   });
+
+  const [isLoading, setIsLoading] = useState(false); // Loading state
 
   const navigate = useNavigate();
 
@@ -34,19 +37,24 @@ function register() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Set loading state to true before the request
+    setIsLoading(true);
+
     const url = await upload(file);
     try {
-      await newRequest.post("auth/register", {
+      await newRequest.post('auth/register', {
         ...user,
         img: url,
       });
-      console.log(user)
-      navigate("/login")
+      console.log(user);
+      navigate('/login');
     } catch (err) {
       console.log(err);
+    } finally {
+      // Set loading state to false after the request completes
+      setIsLoading(false);
     }
   };
-
 
   return (
     <div className="register">
@@ -70,7 +78,7 @@ function register() {
             required
           />
           <label htmlFor="">Password</label>
-          <input name="password" type="password" onChange={handleChange} required/>
+          <input name="password" type="password" onChange={handleChange} required />
           <label htmlFor="">Profile Picture</label>
           <input type="file" onChange={(e) => setFile(e.target.files[0])} />
           <label htmlFor="">Country</label>
@@ -80,7 +88,13 @@ function register() {
             placeholder="Usa"
             onChange={handleChange}
           />
-          <button type="submit">Register</button>
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? (
+              <CircularProgress size={20} thickness={5} color="inherit" />
+            ) : (
+              'Register'
+            )}
+          </button>
         </div>
         <div className="right">
           <h1>I want to become a seller</h1>

@@ -35,7 +35,7 @@ function home() {
           <CatCard item={card} key={card.id} />
         ))}
       </Slide>
-     
+
       <Features />
 
       <CategoryIcons />

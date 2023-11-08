@@ -5,15 +5,17 @@ import { Elements } from "@stripe/react-stripe-js";
 import newRequest from "../../utils/newRequest.js";
 import { useParams } from "react-router-dom";
 import CheckOutForm from "../../components/CheckOutForm/CheckOutForm";
+import { CircularProgress } from "@mui/material";
 
 const stripePromise = loadStripe(
-  "STRIPE_PUBLIC_KEY"
+  "pk_test_51N8ixqSJRuBcsSqBXSWzTYkjTEXYimWeMAvInXA6fzOXVaBDRppl0HRthcGDKr3Uj11NJqGaUbvrfFcjaUIF1xDD00w99ve5LB"
 );
 
 function Payment() {
   const { id } = useParams();
 
   const [clientSecret, setClientSecret] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const makeRequest = async () => {
@@ -22,8 +24,10 @@ function Payment() {
           `/orders/create-payment-intent/${id}`
         );
         setClientSecret(res.data.clientSecret);
+        setLoading(false);
       } catch (error) {
         console.log(error);
+        setLoading(false);
       }
     };
     makeRequest();
@@ -44,11 +48,15 @@ function Payment() {
 
   return (
     <div className="Payment">
-       <h1 className="payment-page__heading">Payment Page</h1>
-      {clientSecret && (
-        <Elements options={options} stripe={stripePromise}>
-          <CheckOutForm />
-        </Elements>
+      <h1 className="payment-page__heading">Payment Page</h1>
+      {loading ? (
+        <CircularProgress size={100} thickness={1} color="inherit" />
+      ) : (
+        clientSecret && (
+          <Elements options={options} stripe={stripePromise}>
+            <CheckOutForm />
+          </Elements>
+        )
       )}
     </div>
   );
