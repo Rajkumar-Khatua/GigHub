@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const newRequest = axios.create({
-  baseURL: "https://gig-hub-server.vercel.app/api",
+  baseURL: "http://localhost:5500/api/",
   withCredentials: true,
 });
 
