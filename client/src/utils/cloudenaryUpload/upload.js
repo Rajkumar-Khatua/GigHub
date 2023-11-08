@@ -4,12 +4,12 @@ const upload = async (file) => {
   const data = new FormData();
   data.append("file", file);
   data.append("upload_preset", "resaleing");
-  data.append("cloud_name", "CLOUD_NAME");
+  data.append("cloud_name", "dtwy8twom");
   // data.append("Content-Type", "application/json");
 
   try {
     const res = await axios.post(
-      "https://api.cloudinary.com/v1_1/CLOUD_NAME/image/upload",
+      "https://api.cloudinary.com/v1_1/dtwy8twom/image/upload",
       data
     );
     const { url } = res.data;

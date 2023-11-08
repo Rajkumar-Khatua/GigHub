@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-// import mobile from "../../../src/"
 import "./navbar.scss";
-import MenuIcon from '@mui/icons-material/Menu';
 import LanguageIcon from "@mui/icons-material/Language";
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
+import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 
@@ -54,28 +52,43 @@ function navbar() {
         <div className="middle">
           <div className="links">
             <div className="mobileHide">
-            <span>Business</span>
-            <span>Explore</span>
-            <span className="lang">
-              <LanguageIcon fontSize="small" />
-              English
-            </span>
+              <span>Business</span>
+              <span>Explore</span>
+              <span className="lang">
+                <LanguageIcon fontSize="small" />
+                English
+              </span>
             </div>
             <Link to="/register" className="link">
-            {!currentUser?.isSeller && <span className="mobile_seller_view">Become a Seller <PersonAddAlt1Icon/></span>}
-              </Link>
+              {!currentUser?.isSeller && (
+                <span className="mobile_seller_view">
+                  Become a Seller <PersonAddAlt1Icon />
+                </span>
+              )}
+            </Link>
           </div>
         </div>
 
         <div className="right">
-          {!currentUser && <Link to="/login" className="link"> <span className="signIn">Sign in</span></Link>}
-          {!currentUser && <Link to="/register" className="link"> <button className="join">Join</button></Link>}
+          {!currentUser && (
+            <Link to="/login" className="link">
+              {" "}
+              <span className="signIn">Sign in</span>
+            </Link>
+          )}
+          {!currentUser && (
+            <Link to="/register" className="link">
+              {" "}
+              <button className="join">Join</button>
+            </Link>
+          )}
           {currentUser && (
             // if menu is open then it will false other wise true!
             <div className="user" onClick={() => setOpen(!open)}>
               <img
                 src={currentUser.img || "../../../public/img/noProfilePic.jpg"}
                 alt="user img"
+                loading="lazy"
               />
               <span>{currentUser?.username}</span>
               {/* Open if  it is not open */}
@@ -99,6 +112,9 @@ function navbar() {
                     </Link>
                     <Link className="link" to="/messages">
                       Messages
+                    </Link>
+                    <Link className="link" to="/profile">
+                      Profile
                     </Link>
                     <Link className="link" onClick={handleLogout}>
                       Logout

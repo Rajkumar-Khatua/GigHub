@@ -23,6 +23,7 @@ import Register from "./Pages/register/Register";
 import { QueryClient, QueryClientProvider, useQuery } from "react-query";
 import Payment from "./Pages/Payment/Payment";
 import PaymentSuccess from "./Pages/PaymentSuccess/PaymentSuccess";
+import Profile from "./Pages/profile/Profile";
 
 function App() {
   const queryClient = new QueryClient();
@@ -76,6 +77,10 @@ function App() {
           element: <Message />,
         },
         {
+          path: "/profile",
+          element: <Profile />,
+        },
+        {
           path: "/login",
           element: <Login />,
         },
@@ -91,8 +96,6 @@ function App() {
           path: "/success",
           element: <PaymentSuccess />,
         },
-        
-       
       ],
     },
   ]);
